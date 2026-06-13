@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: meet_ai_backend
+    volumes:
+      - ./backend:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - ollama
+    environment:
+      - DEBUG=1
+      - DB_NAME=meetai
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+      - OLLAMA_HOST=http://ollama:11434
+      - OLLAMA_MODEL=llama3.1  # Added this line
+    restart: always
+
+  db:
+    image: postgres:15
+    container_name: meet_ai_db
+    restart: always
+    environment:
+      POSTGRES_DB: meetai
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: always
+    # Keep ollama running
+    command: serve
+
+volumes:
+  pgdata:
+  ollama_data:
+  static_volume:
+  media_volume:

@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Amir Meet AI Assistant",
+  "version": "1.0",
+
+  "description": "Captures Google Meet captions and sends them to local AI backend",
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Meet AI Assistant"
+  },
+
+  "permissions": [
+    "storage"
+  ],
+
+  "host_permissions": [
+    "https://meet.google.com/*",
+    "http://127.0.0.1:8000/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["https://meet.google.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
