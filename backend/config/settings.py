@@ -163,7 +163,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 # Ollama Configuration
 OLLAMA_HOST = os.environ.get('OLLAMA_HOST', 'http://ollama:11434')
-OLLAMA_MODEL = os.environ.get('OLLAMA_MODEL', 'llama3.1')  # Changed to llama3.1
+OLLAMA_MODEL = os.environ.get('OLLAMA_MODEL', 'llama3.2:1b')  # Changed to llama3.1
 
 # CORS settings (for development)
 CORS_ALLOW_ALL_ORIGINS = True  # Only for development
@@ -175,3 +175,6 @@ CORS_ALLOWED_ORIGINS = [
 # Increase timeout for large requests
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None  # Remove limit
+
+
+# OLLAMA_MODEL = 'llama3.1:latest'

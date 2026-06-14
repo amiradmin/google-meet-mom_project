@@ -11,8 +11,10 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
-      - ollama
+      db:
+        condition: service_healthy
+      ollama:
+        condition: service_started
     environment:
       - DEBUG=1
       - DB_NAME=meetai
@@ -21,7 +23,7 @@ services:
       - DB_HOST=db
       - DB_PORT=5432
       - OLLAMA_HOST=http://ollama:11434
-      - OLLAMA_MODEL=llama3.1  # Added this line
+      - OLLAMA_MODEL=llama3.2:1b
     restart: always
 
   db:
@@ -36,6 +38,11 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   ollama:
     image: ollama/ollama
@@ -45,7 +52,6 @@ services:
     volumes:
       - ollama_data:/root/.ollama
     restart: always
-    # Keep ollama running
     command: serve
 
 volumes:
