@@ -6,7 +6,7 @@ from django.conf import settings
 class OllamaService:
     def __init__(self):
         self.base_url = getattr(settings, 'OLLAMA_HOST', 'http://ollama:11434')
-        self.model = getattr(settings, 'OLLAMA_MODEL', 'llama3.2:3b')  # Updated to 3B
+        self.model = getattr(settings, 'OLLAMA_MODEL', 'gemma2:9b')  # Updated to 3B
 
     def generate_summary(self, transcript_text):
         """Generate meeting minutes directly in Farsi using the larger model"""

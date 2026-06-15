@@ -3,7 +3,7 @@ import requests
 OLLAMA_URL = "http://ollama:11434/api/generate"
 
 
-def ask_ollama(prompt: str, model: str = "llama3.2:3b"):
+def ask_ollama(prompt: str, model: str = "gemma2:9b"):
     payload = {
         "model": model,
         "prompt": prompt,
